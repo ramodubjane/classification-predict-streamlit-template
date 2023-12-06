@@ -42,7 +42,7 @@ def main():
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
 	st.title("Team-JM-4")
-	st.subheader("Climate change tweet classification")
+	st.subheader("kamogelo")
 
 	# Creating sidebar with selection box -
 	# you can create multiple pages this way
