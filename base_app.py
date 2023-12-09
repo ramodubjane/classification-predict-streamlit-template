@@ -25,8 +25,10 @@
 import streamlit as st
 import joblib,os
 
+
 # Data dependencies
 import pandas as pd
+import numpy as np
 
 # Vectorizer
 news_vectorizer = open("resources/tfidfvect.pkl","rb")
@@ -34,23 +36,31 @@ tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl f
 
 # Load your raw data
 raw = pd.read_csv("resources/train.csv")
-
 # The main function where we will build the actual app
 def main():
 	"""Tweet Classifier App with Streamlit """
 
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
-	st.title("Team-JM-4")
-	st.subheader("kamogelo")
+	st.title("Team_JM_4")
+	st.subheader("Climate Change ")
 
 	# Creating sidebar with selection box -
 	# you can create multiple pages this way
 	options = ["Prediction", "Information"]
 	selection = st.sidebar.selectbox("Choose Option", options)
 
+	# Define the content for each option
+	if selection == "Prediction":
+	# Content for Prediction option
+		st.header("Prediction")
+
+	elif selection == "Information":
+    # Content for Information option
+   		st.header("Information")
+
 	# Building out the "Information" page
-	if selection == "Information":
+	if  selection == "Information" :
 		st.info("General Information")
 		# You can read a markdown file from supporting resources folder
 		st.markdown("Some information here")
