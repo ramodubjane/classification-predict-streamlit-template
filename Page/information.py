@@ -13,17 +13,17 @@ tweet_cv = joblib.load(news_vectorizer)  # loading your vectorizer from the pkl 
 # Load your raw data
 raw = pd.read_csv("resources/train.csv")
 
+# Set page configuration to remove Streamlit Happy Plastic logo
+st.set_page_config(page_title="Team_JM_4", page_icon="", layout="wide")
+
 # The main function where we will build the actual app
 def main():
     """Tweet Classifier App with Streamlit """
 
-    # Remove Streamlit logo
-    st.set_page_config(logo=None)
-
     # Creates a main title and subheader on your page -
     # these are static across all pages
-    st.title("Happy Plastic PTY")
-    st.subheader("Climate Change tweet classification ")
+    st.title("Team_JM_4")
+    st.subheader("Climate Change ")
 
     st.info("Make predictions on climate change sentiment")
 
@@ -50,7 +50,7 @@ def main():
     st.subheader("Raw Twitter data and label")
     if st.checkbox('Show raw data'):  # data is hidden if the box is unchecked
         st.write(raw[['sentiment', 'message']])  # will write the df to the page
-
+                                    
     # Display a bar graph showing sentiment distribution in the raw data
     st.subheader("Sentiment Distribution")
     sentiment_counts = raw['sentiment'].value_counts()
@@ -59,5 +59,6 @@ def main():
 # Required to let Streamlit instantiate our web app.
 if __name__ == '__main__':
     main()
+
 
 
