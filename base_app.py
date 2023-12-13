@@ -47,12 +47,21 @@ def main():
     # Creating text box for user input
     tweet_text = st.text_area("Enter Text", "Type Here")
 
+    # Model selection
+    model_option = st.selectbox("Choose a Model", ["Logistic Regression", "Linear SVM", "KNN"])
+
     if st.button("Classify"):
         # Transforming user input with vectorizer
         vect_text = tweet_cv.transform([tweet_text]).toarray()
-        # Load your .pkl file with the model of your choice + make predictions
-        # Try loading in multiple models to give the user a choice
-        predictor = joblib.load(open(os.path.join("resources/Logistic_regression.pkl"), "rb"))
+
+        # Load the selected model based on user choice
+        if model_option == "Logistic Regression":
+            predictor = joblib.load(open(os.path.join("resources/Logistic_regression.pkl"), "rb"))
+        elif model_option == "Linear SVM":
+            predictor = joblib.load(open(os.path.join("resources/linear_svm_model.pkl"), "rb"))
+        elif model_option == "KNN":
+            predictor = joblib.load(open(os.path.join("resources/knn_model.pkl"), "rb"))
+
         prediction = predictor.predict(vect_text)
 
         # When the model has successfully run, will print prediction
@@ -72,5 +81,7 @@ def main():
 # Required to let Streamlit instantiate our web app.
 if __name__ == '__main__':
     main()
+
+
 
 

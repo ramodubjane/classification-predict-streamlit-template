@@ -1,58 +1,43 @@
+# Streamlit dependencies
 import streamlit as st
+import joblib
+import os
+
+# Data dependencies
 import pandas as pd
-from sklearn.pipeline import Pipeline
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, f1_score, classification_report
 
-# Sample data for demonstration
-data = {
-    'sentiment': [1, 1, 2, 1, 1],
-    'message': [
-        "PolySciMajor EPA chief doesn't think carbon di...",
-        "It's not like we lack evidence of anthropogeni...",
-        "RT @RawStory: Researchers say we have three ye...",
-        "#TodayinMaker# WIRED : 2016 was a pivotal year...",
-        "RT @SoyNovioDeTodas: It's 2016, and a racist, ..."
-    ],
-    'tweetid': [625221, 126103, 698562, 573736, 466954]
-}
+# Load your raw data at the module level
+raw = pd.read_csv("resources/train.csv")
 
-df = pd.DataFrame(data)
+# Load the KNN model at the module level
+Knb = joblib.load(open(os.path.join("resources/KNN_model.pkl"), "rb"))
 
-# Split the data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(
-    df['message'], df['sentiment'], test_size=0.2, random_state=42
-)
+# Initialize tweet_text with a default value
+tweet_text = "Type Here"
 
-# Create a pipeline with CountVectorizer and KNeighborsClassifier
-knn = KNeighborsClassifier(n_neighbors=10)
-pipeline = Pipeline([
-    ('vectorizer', CountVectorizer()),
-    ('knn', knn)
-])
-
-# Fit the model
-pipeline.fit(X_train, y_train)
-
-# Streamlit app
+# The main function where we will build the actual app
 def main():
-    st.title('KNN Classifier App')
+    """Tweet Classifier App with Streamlit """
 
-    # Text input for user to enter a message
-    user_input = st.text_input('Enter a message for sentiment analysis:')
-    
-    if user_input:
-        # Make prediction
-        prediction = pipeline.predict([user_input])[0]
-        
-        # Display the prediction
-        st.write(f'Sentiment Prediction: {prediction}')
+    # ... (same as your existing code)
+
+    if st.button("Classify"):
+        # Transforming user input with vectorizer
+        vect_text = tweet_cv.transform([tweet_text]).toarray()
+        # Make predictions using the loaded KNN model
+        prediction = Knb.predict(vect_text)
+
+        # When the model has successfully run, it will print the prediction
+        st.success("Text Categorized as: {}".format(prediction[0]))
+
+    # ... (same as your existing code)
 
 # Required to let Streamlit instantiate our web app.
 if __name__ == '__main__':
     main()
+
+
+
 
 
 
